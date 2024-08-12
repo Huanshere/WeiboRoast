@@ -1,0 +1,19 @@
+{
+    "user_id_list": ["1669879400"],
+    "only_crawl_original": 1,
+    "since_date": 180,
+    "start_page": 1,
+    "write_mode": [
+        "json"
+    ],
+    "original_pic_download": 0,
+    "retweet_pic_download": 0,
+    "original_video_download": 0,
+    "retweet_video_download": 0,
+    "download_comment": 1,
+    "comment_max_download_count": 100,
+    "download_repost": 1,
+    "repost_max_download_count": 100,
+    "user_id_as_folder_name": 0,
+    "remove_html_tag": 1
+}
