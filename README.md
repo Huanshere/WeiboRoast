@@ -8,16 +8,16 @@
 
 方法2. 从源码安装： 
 
-    ``` 
     pip install -r requirements.txt
     streamlit run st.py
-    ```
+   
 
 ## 使用方法
 
 1. 在 `config.py` 中填写API 密钥（可以自定义配置所有模型）。
 2. 双击 `一键启动.bat` 运行程序（默认使用 sonnet 模型，每次使用约 1 毛钱）。
 
+![演示](https://github.com/user-attachments/assets/8ff73c11-dbe8-49e3-aa89-800de64ce0ce)
 
 ## 高级用法
 
