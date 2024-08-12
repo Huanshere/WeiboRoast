@@ -1,21 +1,21 @@
 # 微博吐槽大会 WeiboRoast
 
-微博吐槽大会是一个集成了微博数据抓取、处理、分析和生成幽默评论的自动化系统。它通过调用 GPT 模型生成对微博用户的"吐槽"，并支持定时任务和通知功能。
+微博吐槽大会是一个集成了微博数据抓取、处理、分析和生成幽默评论的自动化系统，通过weibo-crawler爬取指定用户的近20条原创微博，然后调用 GPT 模型生成对微博用户的"吐槽"。
 
 ## 快速开始
 
-[下载 Windows 一键启动包](https://pan.baidu.com/s/15t1o2Bnu-pJuEL_Y6BA3fg?pwd=rt0p)
+方法1. [下载 Windows 一键启动包](https://pan.baidu.com/s/15t1o2Bnu-pJuEL_Y6BA3fg?pwd=rt0p) ，在`config.py`中填写key后`一键启动.bat`
 
-或者从源码安装： 
+方法2. 从源码安装： 
 
-``` 
-pip install -r requirements.txt
-streamlit run st.py
-```
+    ``` 
+    pip install -r requirements.txt
+    streamlit run st.py
+    ```
 
 ## 使用方法
 
-1. 在 `config.py` 中填写您的 API 密钥。
+1. 在 `config.py` 中填写API 密钥（可以自定义配置所有模型）。
 2. 双击 `一键启动.bat` 运行程序（默认使用 sonnet 模型，每次使用约 1 毛钱）。
 
 
