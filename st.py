@@ -4,7 +4,7 @@ from ask_gpt import ask_gpt
 from prompts_storage import get_prompt
 from weibo import weibo_for_tucao
 
-def tucao_main(share_link: str, max_blogs: int = 20):
+def tucao_main(share_link: str, max_blogs: int = 15):
     user_id = share_link.split('/u/')[-1]
     user_id_list = [user_id]
     screen_names = weibo_for_tucao(user_id_list, max_blogs)[0]

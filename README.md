@@ -4,9 +4,9 @@
 
 ## 快速开始
 
-方法1. [下载 Windows 一键启动包](https://pan.baidu.com/s/15t1o2Bnu-pJuEL_Y6BA3fg?pwd=rt0p) ，在`config.py`中填写key后`一键启动.bat`
+<!-- 方法1. [下载 Windows 一键启动包](https://pan.baidu.com/s/15t1o2Bnu-pJuEL_Y6BA3fg?pwd=rt0p) ，在`config.py`中填写key后`一键启动.bat` -->
 
-方法2. 从源码安装： 
+从源码安装： 
 
     pip install -r requirements.txt
     streamlit run st.py

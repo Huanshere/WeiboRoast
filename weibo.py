@@ -1959,7 +1959,7 @@ class Weibo(object):
                 if self.retweet_video_download:
                     self.download_files("video", "retweet", wrote_count)
 
-    def get_pages(self, max_tweets):
+    def get_pages(self, max_blogs):
         """获取全部微博"""
         try:
             # 用户id不可用
@@ -1998,7 +1998,7 @@ class Weibo(object):
                         page1 = page
                         random_pages = random.randint(1, 5)
 
-                    if self.got_count >= max_tweets:  # 添加这个条件判断
+                    if self.got_count >= max_blogs:  # 添加这个条件判断
                         break
                 self.write_data(wrote_count)  # 将剩余不足20页的微博写入文件
             logger.info("微博爬取完成，共爬取%d条微博", self.got_count)
@@ -2052,7 +2052,7 @@ class Weibo(object):
         self.got_count = 0
         self.weibo_id_list = []
 
-    def start(self, max_tweets = 12):
+    def start(self, max_blogs = 12):
         """运行爬虫"""
         try:
             for user_config in self.user_config_list:
@@ -2060,10 +2060,10 @@ class Weibo(object):
                     for query in user_config["query_list"]:
                         self.query = query
                         self.initialize_info(user_config)
-                        self.get_pages(max_tweets)
+                        self.get_pages(max_blogs)
                 else:
                     self.initialize_info(user_config)
-                    self.get_pages(max_tweets)
+                    self.get_pages(max_blogs)
                 logger.info("信息抓取完毕")
                 logger.info("*" * 100)
                 if self.user_config_file_path and self.user:
@@ -2142,11 +2142,11 @@ def main():
             push_deer("weibo-crawler运行出错，错误为{}".format(e))
         logger.exception(e)
 
-def weibo_for_tucao(user_id_list, max_tweets = 12):
+def weibo_for_tucao(user_id_list, max_blogs = 12):
     try:
         config = insert_config(user_id_list)
         wb = Weibo(config)
-        screen_names = wb.start(max_tweets)  # 爬取微博信息
+        screen_names = wb.start(max_blogs)  # 爬取微博信息
         return screen_names
     except Exception as e:
         logger.exception(e)
