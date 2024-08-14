@@ -161,3 +161,4 @@ cython_debug/
 Weibo/
 output/
 log/
+/js.json

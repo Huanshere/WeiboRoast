@@ -9,7 +9,11 @@ def crawl_weibo(user_name: str, max_blogs: int = 15):
     link = getUserLinkByName(user_name)
     user_id = link.split('/u/')[-1]
     user_id_list = [user_id]
-    screen_names = weibo_for_tucao(user_id_list, max_blogs)[0]
+    try:
+        screen_names = weibo_for_tucao(user_id_list, max_blogs)[0]
+    except:
+        st.error("😣 找不到你说的博主 请换一个博主试试")
+        st.stop()
 
     try:
         with open(f'weibo/{screen_names}/{user_id}.json', 'r', encoding='utf-8') as f:
