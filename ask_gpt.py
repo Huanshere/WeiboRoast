@@ -3,6 +3,9 @@ from config import *
 from threading import Lock
 import json_repair
 import json 
+from openai import OpenAI
+import time
+
 LOG_FOLDER = 'output/gpt_log'
 LOCK = Lock()
 
@@ -55,32 +58,42 @@ def ask_gpt(prompt, model = 'deepseek-coder', response_json = True, log_title = 
     messages = [
         {"role": "user", "content": prompt},
     ]
-    from openai import OpenAI
-    client = OpenAI(api_key=llm['api_key'], base_url=llm['base_url']+ '/v1')
-
-    response_format = {"type": "json_object"} if response_json and model in llm_support_json else None
-    response = client.chat.completions.create(
-        model=model,
-        messages=messages,
-        response_format=response_format
-    )
-    if response_json:
-        try:
-            response_data = json_repair.loads(response.choices[0].message.content)
-        except:
-            print(f"⚠️json_repair failed:\n{response.choices[0].message.content}")
-            response_data = response.choices[0].message.content
-    else:
-        response_data =  response.choices[0].message.content
     
-    with LOCK:
-        save_log(model, prompt, response_data, log_title=log_title)
+    retry_count = 0
+    max_retries = 3
+    while retry_count < max_retries:
+        try:
+            client = OpenAI(api_key=llm['api_key'], base_url=llm['base_url']+ '/v1')
+            response_format = {"type": "json_object"} if response_json and model in llm_support_json else None
+            response = client.chat.completions.create(
+                model=model,
+                messages=messages,
+                response_format=response_format
+            )
+            if response_json:
+                try:
+                    response_data = json_repair.loads(response.choices[0].message.content)
+                except:
+                    print(f"⚠️json_repair failed:\n{response.choices[0].message.content}")
+                    response_data = response.choices[0].message.content
+            else:
+                response_data =  response.choices[0].message.content
+            
+            with LOCK:
+                save_log(model, prompt, response_data, log_title=log_title)
 
-    return response_data
+            return response_data
+        except Exception as e:
+            retry_count += 1
+            if retry_count < max_retries:
+                print(f"⚠️请求失败，2秒后重试... (尝试 {retry_count}/{max_retries})")
+                time.sleep(2)
+            else:
+                raise e
 
 # test
 if __name__ == '__main__':
-    print(ask_gpt('hi there hey response in json format, just simply say 你好. ' , model="TA/Qwen/Qwen1.5-72B-Chat", response_json=False)) 
+    print(ask_gpt('hi there hey response in json format, just simply say 你好.' , model="TA/Qwen/Qwen1.5-72B-Chat", response_json=False)) 
 
 
 

@@ -6,7 +6,7 @@ llm_config: list = [
     {
         'name': 'ohmygpt',
         'api_key': OHMYGPT_API_KEY,
-        'base_url': 'https://api.ohmygpt.com',
+        'base_url': 'https://apic.ohmygpt.com/',
         'model': ['deepseek-coder',
                   'deepseek-chat',
                   'gpt-4o', 

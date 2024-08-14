@@ -2084,7 +2084,7 @@ def insert_config(user_id_list):
     config = {
         "user_id_list": user_id_list,
         "only_crawl_original": 0, # 0: 爬取所有微博，1: 仅爬取原创微博
-        "since_date": 180,
+        "since_date": 365, # 爬取微博的时间范围，单位为天
         "start_page": 1,
         "write_mode": ["json"],
         "original_pic_download": 0,
@@ -2101,7 +2101,7 @@ def insert_config(user_id_list):
     
     return config
 
-def weibo_for_tucao(user_id_list, max_blogs = 15):
+def weibo_for_tucao(user_id_list, max_blogs = 20):
     try:
         config = insert_config(user_id_list)
         wb = Weibo(config)
