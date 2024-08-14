@@ -92,7 +92,22 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 st.title("🤭 微博吐槽大会")
-st.info("本项目由 glm-4, kimi, Qwen 提供支持")
+st.markdown("""
+<a href="https://github.com/Huanshere/WeiboRoast" target="_blank" style="
+    display: inline-block;
+    padding: 0.5em 1em;
+    color: white;
+    background-color: #87CEEB;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;">
+    ⭐ 来Github点个星星吧!
+</a>
+""", unsafe_allow_html=True)
+
+st.info("👉 本项目使用 glm-4, kimi, Qwen 生成微博吐槽，仅供娱乐，不代表任何立场")
+
 user_name = st.text_input("📝 输入博主的昵称")
 
 
