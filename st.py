@@ -3,9 +3,11 @@ import json
 from ask_gpt import ask_gpt
 from prompts_storage import get_tucao_dangerous_prompt, get_tucao_polish_safe_prompt, get_filter_prompt, get_friendly_comment_prompt
 from weibo import weibo_for_tucao
+from searchuser import getUserLinkByName
 
-def crawl_weibo(share_link: str, max_blogs: int = 15):
-    user_id = share_link.split('/u/')[-1]
+def crawl_weibo(user_name: str, max_blogs: int = 15):
+    link = getUserLinkByName(user_name)
+    user_id = link.split('/u/')[-1]
     user_id_list = [user_id]
     screen_names = weibo_for_tucao(user_id_list, max_blogs)[0]
 
@@ -72,27 +74,24 @@ st.markdown("""
 
 st.title("🤭 微博吐槽大会")
 st.markdown("")
-share_link = st.text_input("📎 输入博主的分享链接", help="例如: https://weibo.com/u/2751313073 目前仅支持带/u/的")
+user_name = st.text_input("📎 输入博主的昵称")
 
 
-if share_link:
-    if '/u' not in share_link:
-        st.error("🚫 请输入正确的微博分享链接 仅支持带/u/的链接")
-        st.stop()
+if user_name:
     
     with st.spinner("📱 正在搜集微博内容..."):
-        profile, blogs = crawl_weibo(share_link)
+        profile, blogs = crawl_weibo(user_name)
     
     
     with st.spinner("👀 正在过滤敏感内容..."):
-        sensitive_point = filter_content(profile, blogs, share_link.split('/u/')[-1])
+        sensitive_point = filter_content(profile, blogs, user_name)
 
         if sensitive_point ==0 :
             with st.spinner("👿 正在吐槽..."):
-                response = generate_tucao(profile, blogs, share_link.split('/u/')[-1]).strip()
+                response = generate_tucao(profile, blogs, user_name).strip()
         else:
             with st.spinner("😯 正在思考..."):
-                response = generate_friendly_comment(profile, blogs, share_link.split('/u/')[-1]).strip()
+                response = generate_friendly_comment(profile, blogs, user_name).strip()
     
     with st.container():
         st.markdown(f'<div class="output-card"><h3>吐槽 😄</h3>{response}</div>', unsafe_allow_html=True)

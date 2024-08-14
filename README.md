@@ -16,7 +16,7 @@
 
 ## 使用方法
 
-1. 在 `config.py` 中填写API 密钥（可以自定义配置所有模型）。
+1. 在 `config.py` 中填写API 密钥（可以自定义配置所有模型）,以及配置自己的cookie（先在网页端登陆微博然后打开https://weibo.cn然后F12-Network中的Headers->Request Headers-Cookie 具体截图可以 点击[这里](https://github.com/dataabc/weibo-crawler?tab=readme-ov-file#%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96cookie%E5%8F%AF%E9%80%89)查看）。
 2. 双击 `一键启动.bat` 运行程序（默认使用 sonnet 模型，每次使用约 1 毛钱）。
 
 ![演示](https://github.com/user-attachments/assets/8ff73c11-dbe8-49e3-aa89-800de64ce0ce)
@@ -28,4 +28,4 @@
 
 ## 致谢
 
-本项目直接使用了 [weibo-crawler](https://github.com/dataabc/weibo-crawler) 的代码。
+本项目直接使用了 [weibo-crawler](https://github.com/dataabc/weibo-crawler) 和 [WeiboSuperSpider](https://github.com/Python3Spiders/WeiboSuperSpider) 的代码。
