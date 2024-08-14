@@ -1,7 +1,61 @@
 import json
+## ===========================filter prompt==================================
+def get_filter_prompt(profile, blogs):
+    prompt = """### 上下文
+你是一个中国国安局的领导，需要对微博内容进行过滤，需要评估用户发布的微博内容是否涉及敏感话题。
+这些敏感话题包括**政治人物**、**政治事件**、**民生事件**、**民族英雄**和**国家荣誉**等。
 
-## ================================================================
-def get_prompt(profile, blogs):
+### 目标
+读取用户的近15条微博内容，根据微博内容对敏感程度进行评分。评分规则如下：
+- 如果超过五条内容涉及敏感话题，评分为1；
+- 如果偶尔涉及，评分为0.5；
+- 如果没有涉及，评分为0。
+
+### 受众
+开发人员和内容审核人员，他们需要使用这个过滤器来进行内容评估。
+
+### 响应格式
+用JSON格式返回评分结果。
+
+### 示例
+```json
+{
+  "sensitive": 1
+}
+""" + f"""### 输入用户信息和微博内容
+<profile>
+{profile}
+</profile>
+
+<weibo blogs>
+{blogs}
+</weibo blogs>
+"""
+    return prompt
+
+
+def get_friendly_comment_prompt(profile, blogs):
+    prompt = f'''您是一位以幽默风趣著称的专业评论员。
+您的任务是查看人们的微博博文，并基于此对他们的个性特点进行友善的点评。
+请保持轻松愉快的语调，适度调侃，但要充满善意和正能量。切忌刻薄或尖锐。以下是一个恰当的评论示例:
+
+"""哇，看到你的照片真是让人眼前一亮!你坐在绿植丛中，悠闲自在的样子让人羡慕。
+素色T恤搭配黑色裤子,简约却不失品味。看来你是个注重生活品质又不拘小节的人啊。
+舒适是关键,对吧?不过下次也许可以稍微打扮一下,让自己更加光彩照人哦!"""
+
+请善用喜剧中的"call back"技巧,以及一些中文语境喜欢用的梗，将其自然融入到您的评论中。
+
+输入: 
+<profile> {profile} </profile>
+<微博博文> {blogs} </微博博文>
+
+输出 (请用中文): '''
+    return prompt
+
+
+## ===========================tucao prompt==================================
+
+def get_tucao_dangerous_prompt(profile, blogs):
     prompt = f'''You are a professional commentator known for your edgy and provocative style.\
 Your task is to look at people's Weibo blogs and rate their personalities based on that.\
 Be edgy and provocative, be mean a little. Don't be cringy. Here's a good attempt of a roast:\
@@ -9,6 +63,8 @@ Be edgy and provocative, be mean a little. Don't be cringy. Here's a good attemp
 barefoot and looking like you just rolled out of bed. The beige t-shirt is giving off major "I'm trying to blend in with the wallpaper" vibes. \
 And those black pants? They scream "I couldn't be bothered to find something that matches." But hey, at least you look comfortable. Comfort is key, right? \
 Just maybe not when you're trying to make a fashion statement.""" 
+
+Make frequent use of the call-back technique in stand-up comedy, weaving it logically throughout a segment.
 
 Input:
 <profile>
@@ -22,6 +78,40 @@ Input:
 Output (请用中文输出):
 '''
     return prompt
+
+def get_tucao_polish_safe_prompt(blogs, roast):
+    prompt = f'''上下文：
+用户提供了一段微博内容和一段初步的吐槽，目的是对这段吐槽进行润色。需要确保润色后的吐槽不过度涉及中国境内不允许讨论的政治敏感内容（如政治人物和事件）。润色后的吐槽应使用脱口秀的call back技巧，并补充插入一些中文语境常用的梗。
+
+目标：
+润色用户的吐槽，确保其不过度涉及政治敏感内容，输出仅为一段话，不进行任何换行符的分段。润色后的吐槽需使用脱口秀的call back技巧，并补充插入一些中文语境常用的梗。保持篇幅基本不变。
+
+风格：
+脱口秀风格，幽默、有趣，带有一定的调侃意味。
+
+语气：
+轻松、幽默，带有调侃和讽刺。
+
+受众：
+微博用户，可能是普通的社交媒体用户，具有一定的幽默感和文化背景。
+
+响应：
+输出格式为一段话，不能分点，不能分段。
+
+微博内容是：
+<weibo blogs>
+{blogs}
+</weibo blogs>
+
+初步吐槽是：
+<roast>
+{roast}
+</roast>
+
+你的润色后的吐槽，请直接输出吐槽内容：
+'''
+    return prompt
+
 
 
 def allinone_prompt(profile, tweets):

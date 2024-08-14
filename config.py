@@ -18,3 +18,5 @@ llm_config: list = [
                  'gemini-1.5-flash-001'],
     },
 ]
+
+llm_support_json = ['deepseek-coder', 'gpt-4o']

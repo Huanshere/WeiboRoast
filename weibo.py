@@ -2074,34 +2074,6 @@ class Weibo(object):
         except Exception as e:
             logger.exception(e)
 
-
-def handle_config_renaming(config, oldName, newName):
-    if oldName in config and newName not in config:
-        config[newName] = config[oldName]
-        del config[oldName]
-
-def get_config():
-    """获取config.json文件信息"""
-    config_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + "config.json"
-    if not os.path.isfile(config_path):
-        logger.warning(
-            "当前路径：%s 不存在配置文件config.json",
-            (os.path.split(os.path.realpath(__file__))[0] + os.sep),
-        )
-        sys.exit()
-    try:
-        with open(config_path, encoding="utf-8") as f:
-            config = json.loads(f.read())
-            # 重命名一些key, 但向前兼容
-            handle_config_renaming(config, oldName="filter", newName="only_crawl_original")
-            handle_config_renaming(config, oldName="result_dir_name", newName="user_id_as_folder_name")
-            return config
-    except ValueError:
-        logger.error(
-            "config.json 格式不正确，请参考 " "https://github.com/dataabc/weibo-crawler#3程序设置"
-        )
-        sys.exit()
-
 def insert_config(user_id_list):
     """
     Insert configuration with fixed parameters, only user_id_list is variable.
@@ -2111,7 +2083,7 @@ def insert_config(user_id_list):
     """
     config = {
         "user_id_list": user_id_list,
-        "only_crawl_original": 1,
+        "only_crawl_original": 0, # 0: 爬取所有微博，1: 仅爬取原创微博
         "since_date": 180,
         "start_page": 1,
         "write_mode": ["json"],
@@ -2129,20 +2101,7 @@ def insert_config(user_id_list):
     
     return config
 
-
-def main():
-    try:
-        config = get_config()
-        wb = Weibo(config)
-        wb.start()  # 爬取微博信息
-        if const.NOTIFY["NOTIFY"]:
-            push_deer("更新了一次微博")
-    except Exception as e:
-        if const.NOTIFY["NOTIFY"]:
-            push_deer("weibo-crawler运行出错，错误为{}".format(e))
-        logger.exception(e)
-
-def weibo_for_tucao(user_id_list, max_blogs = 12):
+def weibo_for_tucao(user_id_list, max_blogs = 15):
     try:
         config = insert_config(user_id_list)
         wb = Weibo(config)
@@ -2152,6 +2111,5 @@ def weibo_for_tucao(user_id_list, max_blogs = 12):
         logger.exception(e)
 
 if __name__ == "__main__":
-    # main()
     screen_names = weibo_for_tucao(["2751313073"])
     print(f"screen_names: {screen_names}")
