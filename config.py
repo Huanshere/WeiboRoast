@@ -1,5 +1,5 @@
 # API 设置
-OHMYGPT_API_KEY = 'sk-s1EX6QJu5d3962518aBET3BLBkFJ35A3aE0aFa8245dcbD94'  
+OHMYGPT_API_KEY = ''  
 
 # LLM 配置，你可以添加更多 API 如 openai, BASE_URL, MODEL
 llm_config: list = [
