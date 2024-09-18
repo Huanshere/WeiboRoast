@@ -2,21 +2,14 @@
 
 微博吐槽大会是一个仿照wordware的毒舌AI，集成了微博数据抓取、处理、分析和生成幽默毒舌评论的功能，通过weibo-crawler爬取指定用户的近20条原创微博，然后调用 GPT 模型生成对微博用户的"吐槽"。
 
-已经有人做出来卖钱了 zuiti.app 可惜要 6.6 元解锁啊哈哈哈哈，可惜很明显用的不是 sonnet 攻击性不够啊 🐶
-
 ## 快速开始
 
-<!-- 方法1. [下载 Windows 一键启动包](https://pan.baidu.com/s/15t1o2Bnu-pJuEL_Y6BA3fg?pwd=rt0p) ，在`config.py`中填写key后`一键启动.bat` -->
+``` 
+pip install -r requirements.txt
+streamlit run st.py
+```
 
-![演示](https://github.com/user-attachments/assets/bbcf26bd-2072-429c-9b50-876adfa6d9e8)
-
-从源码安装： 
-
-    ``` 
-    pip install -r requirements.txt
-    streamlit run st.py
-    ```
-   
+![演示](https://github.com/user-attachments/assets/bbcf26bd-2072-429c-9b50-876adfa6d9e8) 
 
 ## 使用方法
 
@@ -27,7 +20,7 @@
 ## 高级用法
 
 - 修改 `prompts_storage.py` 中的提示以自定义 AI 生成的内容
-- 修改 `st.py` 中的 `model` , 推荐效果 sonnet > Qwen1.5 72B > deepseek-coder
+- 修改 `st.py` 中的 `model` , 推荐 sonnet 或 Qwen1.5 72B
 
 ## 致谢
 
