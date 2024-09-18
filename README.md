@@ -7,11 +7,10 @@
 ## 快速开始
 
 <!-- 方法1. [下载 Windows 一键启动包](https://pan.baidu.com/s/15t1o2Bnu-pJuEL_Y6BA3fg?pwd=rt0p) ，在`config.py`中填写key后`一键启动.bat` -->
-[1. 在线体验](https://tucaoni.online/) (注意微博 cookie 仅一天有效 可能导致该链接查询用户失败)
 
 ![演示](https://github.com/user-attachments/assets/bbcf26bd-2072-429c-9b50-876adfa6d9e8)
 
-2. 从源码安装： 
+从源码安装： 
 
     ``` 
     pip install -r requirements.txt
